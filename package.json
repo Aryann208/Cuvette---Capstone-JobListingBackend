@@ -1,0 +1,25 @@
+{
+  "name": "cuvette-capstone-joblistingbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend/issues"
+  },
+  "homepage": "https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^5.7.0"
+  }
+}
