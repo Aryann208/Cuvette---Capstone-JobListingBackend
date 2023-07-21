@@ -15,12 +15,16 @@ router.post('/register', async (req, res) => {
 
   try {
     if (!name || !email || !mobile || !password) {
-      return res.status(400).json('Provide all the required fields.');
+      return res
+        .status(400)
+        .json({ error: 'Provide all the required fields.' });
     }
 
     const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
     if (existingUser) {
-      return res.status(409).json("User's Email or Mobile already exists");
+      return res
+        .status(409)
+        .json({ message: "User's Email or Mobile already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,10 +41,12 @@ router.post('/register', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.json({ token });
+    return res.json({ token });
   } catch (error) {
     console.error('Error during Register: ' + error.message);
-    res.status(500).json('Something went wrong, please try again later.');
+    return res
+      .status(500)
+      .json({ error: 'Something went wrong, please try again later.' });
   }
 });
 

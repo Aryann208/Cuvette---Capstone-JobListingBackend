@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -13,20 +16,22 @@ router.post('/login', async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      res
-        .status(401)
-        .json(
-          'Invalid credentials ! Kindly recheck email or password entered .'
-        );
+      return res.status(401).json({
+        error:
+          'Invalid credentials ! Kindly recheck email or password entered .',
+      });
     }
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
       expiresIn: '1h',
     });
-    res.json({ token });
+    return res.json({ token });
   } catch (error) {
     console.error('Error during Login : ' + error.message);
-    res.status(500).json('Something went wrong . Please try again later .');
+    return res
+      .status(500)
+      .json({ error: 'Something went wrong . Please try again later .' });
   }
 });
 

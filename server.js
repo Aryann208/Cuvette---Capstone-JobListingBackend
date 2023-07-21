@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8081;
+const jwtAuthMiddleware = require('./middlewares/authMiddleware');
 const registerRoute = require('./routes/registerRoute');
+const loginRoute = require('./routes/loginRoute');
+const jobpostRoute = require('./routes/jobpostRoute');
 
 const DB = process.env.MONGO_URL;
 mongoose
@@ -16,9 +19,11 @@ mongoose
 app.use(express.json());
 app.get('/', (req, res) => res.status(200).send('Welcome'));
 app.post('/register', registerRoute);
+app.post('/login', loginRoute);
+app.post('/job-post', jwtAuthMiddleware, jobpostRoute);
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json('Something went wrong try again later');
+  res.status(500).json({ error: 'Something went wrong try again later' });
 });
 
 app.get('/health', (req, res) => {
