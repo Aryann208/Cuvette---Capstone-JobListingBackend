@@ -7,12 +7,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (value) => {
+      validator: function (value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return emailRegex.test(value);
       },
+      message: 'Invalid email address',
     },
   },
+
   mobile: {
     type: Number,
     required: true,
@@ -20,13 +22,13 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator: (value) => {
         const mobileRegex = /^\d{10}$/;
-        return mobileRegex.test(mobileNumber);
+        return mobileRegex.test(value);
       },
     },
   },
   password: { type: String, required: true },
 });
 
-const User = mongoose.Model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

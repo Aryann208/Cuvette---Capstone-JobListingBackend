@@ -15,32 +15,32 @@ router.post('/register', async (req, res) => {
 
   try {
     if (!name || !email || !mobile || !password) {
-      res.status(400).json('Provide with all the required fields .');
+      return res.status(400).json('Provide all the required fields.');
     }
 
-    const existingUser = await User.findOne({ email, mobile });
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
     if (existingUser) {
-      res.status(409).json("User's Email or Mobile already exists");
+      return res.status(409).json("User's Email or Mobile already exists");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
+      name,
       email,
       mobile,
-      email,
       password: hashedPassword,
     });
     await newUser.save();
 
-    const Token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
       expiresIn: '1h',
     });
 
     res.json({ token });
   } catch (error) {
-    console.error('Error during Register : ' + error.message);
-    res.status(500).json('Something went wrog please try again later .');
+    console.error('Error during Register: ' + error.message);
+    res.status(500).json('Something went wrong, please try again later.');
   }
 });
 
