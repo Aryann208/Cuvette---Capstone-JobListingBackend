@@ -1,5 +1,5 @@
 const express = require('express');
-const Job = require('../models/Job'); // Assuming you have a Job model defined
+const Job = require('../models/Job');
 const jwtAuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.post('/job-post', async (req, res) => {
     jobPosition,
     monthlySalary,
     jobType,
-    remoteOffice,
+    remoteOrOffice,
     location,
     aboutCompany,
     skillsRequired,
@@ -25,7 +25,7 @@ router.post('/job-post', async (req, res) => {
       !jobPosition ||
       !monthlySalary ||
       !jobType ||
-      !remoteOffice ||
+      !remoteOrOffice ||
       !location ||
       !aboutCompany ||
       !skillsRequired ||
@@ -36,20 +36,21 @@ router.post('/job-post', async (req, res) => {
         .json({ error: 'Provide all the required fields.' });
     }
 
-    const newJobPost = new Job({
-      'Company Name': companyName,
-      'Add logo URL': logoUrl,
-      'Job position': jobPosition,
-      'Monthly salary': monthlySalary,
-      'Job Type': jobType,
-      'Remote/Office': remoteOffice,
-      Location: location,
-      'About Company': aboutCompany,
-      'Skills Required': skillsRequired,
-      Information: information,
+    const newJobPost = await Job.create({
+      companyName,
+      logoUrl,
+      jobPosition,
+      monthlySalary,
+      jobType,
+      remoteOrOffice,
+      location,
+      aboutCompany,
+      skillsRequired,
+      information,
     });
 
-    await newJobPost.save();
+    const newJob = await newJobPost.save();
+
     res.status(200).json({ message: 'Job created successfully !' });
   } catch (error) {
     console.error(error.message);

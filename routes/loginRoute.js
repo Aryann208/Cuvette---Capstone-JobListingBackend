@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
       expiresIn: '1h',
     });
-    return res.json({ token });
+    return res.json({ token, recruiterName: user.name });
   } catch (error) {
     console.error('Error during Login : ' + error.message);
     return res

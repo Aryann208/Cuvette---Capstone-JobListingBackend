@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
       expiresIn: '1h',
     });
 
-    return res.json({ token });
+    return res.json({ token, recruiterName: newUser.name });
   } catch (error) {
     console.error('Error during Register: ' + error.message);
     return res

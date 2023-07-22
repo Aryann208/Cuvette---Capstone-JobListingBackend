@@ -8,7 +8,8 @@ const jwtAuthMiddleware = require('./middlewares/authMiddleware');
 const registerRoute = require('./routes/registerRoute');
 const loginRoute = require('./routes/loginRoute');
 const jobpostRoute = require('./routes/jobpostRoute');
-
+const updateJobpostRoute = require('./routes/updateJobpostRoute');
+const jobfilterRoute = require('./routes/jobfilterRoute');
 const DB = process.env.MONGO_URL;
 mongoose
   .connect(DB, {
@@ -18,9 +19,11 @@ mongoose
 
 app.use(express.json());
 app.get('/', (req, res) => res.status(200).send('Welcome'));
+app.get('/job', jobfilterRoute);
 app.post('/register', registerRoute);
 app.post('/login', loginRoute);
 app.post('/job-post', jwtAuthMiddleware, jobpostRoute);
+app.put('/job-post/:id', jwtAuthMiddleware, updateJobpostRoute);
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: 'Something went wrong try again later' });

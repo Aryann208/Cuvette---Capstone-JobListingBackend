@@ -5,7 +5,7 @@ function jwtAuthMiddleware(req, res, next) {
   const token = req.header('Authorization');
 
   if (!token) {
-    res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
