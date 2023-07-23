@@ -5,7 +5,6 @@ const jwtAuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 router.put('/job-post/:id', async (req, res) => {
-  console.log(req.body);
   const id = req.params.id;
   const updateableFields = req.body;
   console.log(updateableFields);

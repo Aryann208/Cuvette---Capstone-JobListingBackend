@@ -35,6 +35,9 @@ router.post('/job-post', async (req, res) => {
         .status(400)
         .json({ error: 'Provide all the required fields.' });
     }
+    const lowercasedSkills = skillsRequired.map((skill) =>
+      skill.trim().toLowerCase()
+    );
 
     const newJobPost = await Job.create({
       companyName,
@@ -45,7 +48,7 @@ router.post('/job-post', async (req, res) => {
       remoteOrOffice,
       location,
       aboutCompany,
-      skillsRequired,
+      skillsRequired: lowercasedSkills,
       information,
     });
 
