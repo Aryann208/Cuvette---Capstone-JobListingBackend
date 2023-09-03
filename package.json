@@ -1,28 +1,24 @@
 {
-  "name": "cuvette-capstone-joblistingbackend",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend/issues"
-  },
-  "homepage": "https://github.com/Aryann208/Cuvette-Capstone-JobListingBackend#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
-    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.3",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
-    "mongodb": "^5.7.0",
-    "mongoose": "^7.4.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^5.5.0",
+    "mongoose": "^7.2.2",
+    "nodemon": "^2.0.22"
   }
 }
